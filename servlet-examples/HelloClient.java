@@ -3,6 +3,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 // Extend HttpServlet class
+@WebServlet(urlPatterns={"/hello"})
 public class HelloClient extends HttpServlet {
 
 	/**

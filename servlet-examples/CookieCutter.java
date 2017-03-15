@@ -8,8 +8,13 @@ public class CookieCutter extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+
+		ServletContext context = getServletContext();
+		context.setAttribute("seckin", new Integer(5));
+		int seckin = (int) context.getAttribute("seckin");
+
 		if (request.getParameter("setcookie") != null) {
-			Cookie cookie = new Cookie("Nice Cookie", "This is my cookie!!");
+			Cookie cookie = new Cookie("seckin", Integer.toString(seckin));
 			cookie.setMaxAge(30);
 			response.addCookie(cookie);
 			out.println("<html><body><h1>Cookie Set...</h1>");

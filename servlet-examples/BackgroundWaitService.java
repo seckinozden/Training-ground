@@ -7,7 +7,7 @@ public class BackgroundWaitService implements ServletContextListener {
 	ScheduledExecutorService executor;
 
 	public void contextInitialized(ServletContextEvent sce) {
-		this.executor = Executors.newScheduledThreadPool(3);
+		this.executor = Executors.newScheduledThreadPool(1);
 		sce.getServletContext().setAttribute("BackgroundWaitExecutor", executor);
 	}
 

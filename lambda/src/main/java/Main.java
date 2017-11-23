@@ -10,5 +10,7 @@ public class Main {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
 
         ops.printList(numbers);
+
+        ops.sumAll(1,2,3,4,5);
     }
 }

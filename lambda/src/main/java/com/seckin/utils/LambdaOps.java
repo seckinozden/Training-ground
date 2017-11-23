@@ -33,37 +33,43 @@ public class LambdaOps {
     }
 
 
-    public void someComplicatedOpsWithStream(List<Integer> numbers){
+    public void someComplicatedOpsWithStream(List<Integer> numbers) {
+
+        /*
         System.out.println(
                 numbers.stream()
-                        .filter(n->isEven(n))
-                        .map(n-> doubleIt(n))
-                        .filter(n->isGreaterThan5(n))
+                        .filter(n -> isEven(n))
+                        .map(n -> doubleIt(n))
+                        .filter(n -> isGreaterThan5(n))
+                        .findFirst()
+        );
+        */
+
+
+        System.out.println(
+                numbers.stream()
+                        .filter(LambdaOps::isEven)
+                        .map(LambdaOps::doubleIt)
+                        .filter(LambdaOps::isGreaterThan5)
                         .findFirst()
         );
 
-
-
-        //Lazy::MethodName does not work
-        System.out.println(
-                numbers.stream()
-                        .filter(Lazy::isEven)
-                        .map(Lazy::doubleIt)
-                        .filter(Lazy::isGreaterThan5)
-                        .findFirst()
-        );
 
     }
 
-    public boolean isEven(int number) {
+    private static boolean isEven(int number) {
         return number % 2 == 0;
     }
 
-    public int doubleIt(int number) {
+    private static int doubleIt(int number) {
         return number * 2;
     }
 
-    public boolean isGreaterThan5(int number) {
+    private static boolean isGreaterThan5(int number) {
         return number > 5;
+    }
+
+    public void sumAll(int... input){
+        System.out.println("lenght:" + input.length);
     }
 }

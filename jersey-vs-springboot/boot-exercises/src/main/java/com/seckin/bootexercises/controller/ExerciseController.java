@@ -2,6 +2,7 @@ package com.seckin.bootexercises.controller;
 
 import com.seckin.bootexercises.model.Exercise;
 import com.seckin.bootexercises.repository.ExerciseRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,4 +36,26 @@ public class ExerciseController {
         return exerciseRepository.saveAndFlush(exercise);
     }
 
+    @RequestMapping(value = "exercises/update/{id}", method = RequestMethod.PUT)
+    public Exercise updateExercise(@PathVariable Long id, @RequestBody Exercise exercise) {
+        Optional<Exercise> searchResult = exerciseRepository.findById(id);
+        if (searchResult.isPresent()) {
+            Exercise existingExercise = searchResult.get();
+            BeanUtils.copyProperties(exercise, existingExercise);
+            return exerciseRepository.saveAndFlush(existingExercise);
+        }
+
+        return null;
+    }
+
+    @RequestMapping(value = "exercises/delete/{id}", method = RequestMethod.DELETE)
+    public String deleteExercise(@PathVariable Long id) {
+
+        Optional<Exercise> searchResult = exerciseRepository.findById(id);
+        if (searchResult.isPresent()) {
+            exerciseRepository.deleteById(id);
+            return "Exercise deleted. ID=" + id;
+        }
+        return "Exercise with given ID not found! ID=" + id;
+    }
 }

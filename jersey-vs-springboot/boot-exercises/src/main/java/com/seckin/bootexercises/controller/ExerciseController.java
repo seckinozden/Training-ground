@@ -6,24 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1")
 public class ExerciseController {
 
     @Autowired
     ExerciseRepository exerciseRepository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "exercises", method = RequestMethod.GET)
     public List<Exercise> getAllExercises() {
         return exerciseRepository.findAll();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "exercises/{id}", method = RequestMethod.GET)
     public Exercise getExercise(@PathVariable Long id) {
-        return exerciseRepository.getOne(id);
+        Optional<Exercise> exercise = exerciseRepository.findById(id);
+        if (exercise.isPresent())
+            return exercise.get();
+
+        return null;
     }
 
-    @RequestMapping(value = "/new/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "exercises/new/{id}", method = RequestMethod.POST)
     public Exercise createExercise(@PathVariable Long id, @RequestBody Exercise exercise) {
         exercise.setId(id);
         return exerciseRepository.saveAndFlush(exercise);

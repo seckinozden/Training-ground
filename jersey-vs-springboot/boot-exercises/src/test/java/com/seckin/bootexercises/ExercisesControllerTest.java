@@ -62,42 +62,42 @@ public class ExercisesControllerTest {
     }
 
     @Test
-    public void test_createExercise(){
+    public void test_createExercise() {
         //TODO: learn how to mock currentRequest
     }
 
     @Test
-    public void test_updateExercise(){
+    public void test_updateExercise() {
         Exercise existingExercise = new Exercise((long) 1, "Football", "1 ball 22 men");
         Exercise updatedExercise = new Exercise((long) 1, "Football", "A game of death of life");
         Optional<Exercise> exerciseMock = Mockito.mock(Optional.class);
 
         Mockito.when(exerciseMock.isPresent()).thenReturn(true);
         Mockito.when(exerciseMock.get()).thenReturn(existingExercise);
-        Mockito.when(exerciseRepository.findById((long)1)).thenReturn(exerciseMock);
+        Mockito.when(exerciseRepository.findById((long) 1)).thenReturn(exerciseMock);
         Mockito.when(exerciseRepository.saveAndFlush(Mockito.any(Exercise.class))).thenReturn(updatedExercise);
 
-        ResponseEntity<?> responseEntity = exerciseController.updateExercise((long)1, updatedExercise);
+        ResponseEntity<?> responseEntity = exerciseController.updateExercise((long) 1, updatedExercise);
 
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertNotNull(responseEntity.getBody());
         Exercise result = (Exercise) responseEntity.getBody();
-        Assert.assertEquals((long)1,(long)result.getId());
+        Assert.assertEquals((long) 1, (long) result.getId());
         Assert.assertEquals(updatedExercise.getDescription(), result.getDescription());
         Assert.assertEquals(updatedExercise.getName(), result.getName());
     }
 
     @Test
-    public void test_deleteExercise(){
+    public void test_deleteExercise() {
         Exercise existingExercise = new Exercise((long) 1, "Football", "1 ball 22 men");
         Optional<Exercise> exerciseMock = Mockito.mock(Optional.class);
 
         Mockito.when(exerciseMock.isPresent()).thenReturn(true);
         Mockito.when(exerciseMock.get()).thenReturn(existingExercise);
-        Mockito.when(exerciseRepository.findById((long)1)).thenReturn(exerciseMock);
+        Mockito.when(exerciseRepository.findById((long) 1)).thenReturn(exerciseMock);
         Mockito.doNothing().when(exerciseRepository).delete(Mockito.any(Exercise.class));
 
-        ResponseEntity<?> responseEntity = exerciseController.deleteExercise((long)1);
+        ResponseEntity<?> responseEntity = exerciseController.deleteExercise((long) 1);
 
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }

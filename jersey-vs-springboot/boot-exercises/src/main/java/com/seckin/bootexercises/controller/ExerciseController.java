@@ -37,7 +37,7 @@ public class ExerciseController {
     public ResponseEntity<?> createExercise(@RequestBody Exercise exercise) {
 
         Exercise result = exerciseRepository.saveAndFlush(exercise);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + result.getDescription()).buildAndExpand(result.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + result.getId()).buildAndExpand(result.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }

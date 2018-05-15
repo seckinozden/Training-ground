@@ -21,8 +21,24 @@ public class SpecialLogger {
     }
 
 
+    @Around(value = "allControllerOperations()")
+    public Object logAllControllerOperations(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+        long start = System.currentTimeMillis();
+        Object result = proceedingJoinPoint.proceed();
+        long stop = System.currentTimeMillis();
+        String methodName = proceedingJoinPoint.getSignature().getName();
+        System.err.println(String.format("%s runs %d ms", methodName, (stop - start)));
+        return result;
+    }
+
+
     @Pointcut("@annotation(com.seckin.bootexercises.aspect.LogProfile)")
-    public void getByIdOperation(){
+    public void getByIdOperation() {
+    }
+
+    @Pointcut("within(com.seckin.bootexercises.controller..*)")
+    public void allControllerOperations() {
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.seckin.bootexercises.controller;
 
+import com.seckin.bootexercises.aspect.LogProfile;
 import com.seckin.bootexercises.model.Exercise;
 import com.seckin.bootexercises.repository.ExerciseRepository;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +25,7 @@ public class ExerciseController {
         return ResponseEntity.ok(exerciseRepository.findAll());
     }
 
+    @LogProfile
     @RequestMapping(value = "exercises/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getExercise(@PathVariable Long id) {
         Optional<Exercise> exercise = exerciseRepository.findById(id);
